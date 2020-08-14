@@ -1,2 +1,3 @@
 # music_generation
-music generator
+music generation program.
+requires python-musical lib
