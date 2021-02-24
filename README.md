@@ -2,16 +2,6 @@
 
 This tool procedurally generates music based on codified Western classical music principles.
 
-## Getting started
-
-To get a copy of this repository, simply open up git bash in an empty folder and use the command:
-
-		$ git clone https://github.com/rbaltrusch/music_generation
-
-To install all python dependencies, run the following in your command line:
-
-    python -m pip install -r requirements.txt
-
 ## Next steps
 
 - Planning to extract parameterization into an external config file.
@@ -20,6 +10,16 @@ To install all python dependencies, run the following in your command line:
 ## Parameterization
 
 Custom parameterization is possible, but currently not consolidated into one config file.
+
+## Getting started
+
+To get a copy of this repository, simply open up git bash in an empty folder and use the command:
+
+    $ git clone https://github.com/rbaltrusch/music_generation
+
+To install all python dependencies, run the following in your command line:
+
+    python -m pip install -r requirements.txt
 
 ## Python
 
