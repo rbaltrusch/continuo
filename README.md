@@ -1,3 +1,5 @@
+[![Pylint](https://github.com/rbaltrusch/music_generation/actions/workflows/pylint.yml/badge.svg)](https://github.com/rbaltrusch/music_generation/actions/workflows/pylint.yml)
+
 # Music Generation
 
 This tool procedurally generates music based on codified Western classical music principles.
