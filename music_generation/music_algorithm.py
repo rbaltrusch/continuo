@@ -6,12 +6,18 @@ Created on Sat Jun  1 16:03:40 2019
 """
 import math
 from functools import partial
-from harmony import make_bass_line, make_motif, make_progression, get_consonance
+
+from harmony import get_consonance
+from harmony import make_bass_line
+from harmony import make_motif
+from harmony import make_progression
+from postprocessing import get_bass_line_inversions
+from postprocessing import smooth_bass_line
 from rhythm import octavify
-from postprocessing import smooth_bass_line, get_bass_line_inversions
+
 
 def make_piece_alt(timeline, note_length, scale_len):
-    '''generate a piece, work in progress'''
+    """generate a piece, work in progress"""
     progression = make_progression(number_of_chords=8)
     bass_line = make_bass_line(progression)
     list_of_bass_line_inversions = get_bass_line_inversions(bass_line, smoothness=50000)
@@ -23,9 +29,9 @@ def make_piece_alt(timeline, note_length, scale_len):
         timeline = octavify(timeline, i, note_length, third.transpose(12), 0)
         timeline = octavify(timeline, i, note_length, fifth.transpose(12), 0)
 
+
 def make_piece(time_length, note_length, number_of_layers, scale_len, random_intervals):
-    '''returns list of lists (containing notes (type double)'''
-    time_counter = 0
+    """returns list of lists (containing notes (type double)"""
     motif_length = 24
     layers = []
     current_motifs = []
@@ -33,13 +39,21 @@ def make_piece(time_length, note_length, number_of_layers, scale_len, random_int
     for _ in range(length):
         for j in range(number_of_layers):
             if not j:
-                progression = make_progression(motif_length)
-                bass_line = make_bass_line(progression)
-                list_of_bass_line_inversions = get_bass_line_inversions(bass_line, smoothness=50000)
-                motif = smooth_bass_line(list_of_bass_line_inversions)
+                motif = smooth_bass_line(
+                    get_bass_line_inversions(
+                        make_bass_line(make_progression(motif_length)), smoothness=50000
+                    )
+                )
             else:
                 sophistication = 1
-                make_motif_func = partial(make_motif, layers, time_counter, sophistication, scale_len, random_intervals, motif_length)
+                make_motif_func = partial(
+                    make_motif,
+                    layers,
+                    sophistication,
+                    scale_len,
+                    random_intervals,
+                    motif_length,
+                )
                 motif = get_motif(make_motif_func, layers)
                 if not motif in current_motifs:
                     current_motifs.append(motif)
@@ -50,12 +64,11 @@ def make_piece(time_length, note_length, number_of_layers, scale_len, random_int
             else:
                 layers[j].extend(whole_layer)
             print(j, whole_layer)
-        time_counter += motif_length
-        print(time_counter)
     return layers
 
+
 def get_motif(make_motif_func, layers):
-    '''returns list of notes (type double), after determining max consonance motif'''
+    """returns list of notes (type double), after determining max consonance motif"""
     poss_motives = []
     consonances = []
     for _ in range(250):
@@ -68,4 +81,3 @@ def get_motif(make_motif_func, layers):
         consonances.append(temp_consonance)
     motif = poss_motives[consonances.index(max(consonances))]
     return motif
-    

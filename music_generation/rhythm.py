@@ -4,9 +4,10 @@ Created on Sat Jun  1 16:07:02 2019
 
 @author: Korean_Crimson
 """
+from random import choice
 
 import timeline
-from random import choice
+
 
 def make_rhythm(layer, note_lengths):
     """layer is a list of notes."""
@@ -15,10 +16,13 @@ def make_rhythm(layer, note_lengths):
     note_lengths_prob = choose_note_lengths(note_lengths)
     for _ in layer:
         momentums = get_rhythmic_momentum(momentums)
-        new_note_length = get_note_length(momentums, prev_note_length_i, note_lengths_prob, note_lengths)
+        new_note_length = get_note_length(
+            momentums, prev_note_length_i, note_lengths_prob, note_lengths
+        )
         note_lengths.append(new_note_length)
         prev_note_length_i = note_lengths.index(note_lengths[-1])
     return note_lengths
+
 
 def get_note_length(momentums, prev_note_length_i, note_lengths_prob, note_lengths):
     """return note length randomly based on rhytyhmic momentum"""
@@ -34,9 +38,11 @@ def get_note_length(momentums, prev_note_length_i, note_lengths_prob, note_lengt
         note_length = choice(note_lengths)
     return note_length
 
+
 def choose_note_lengths(note_lengths):
     """returns list"""
     return [choice(note_lengths) for i, _ in enumerate(note_lengths) if i < 3]
+
 
 def get_rhythmic_momentum(momentums):
     """returns list of momentums"""
@@ -49,10 +55,12 @@ def get_rhythmic_momentum(momentums):
         momentums = [0, 0, 0, 0, 0, 1, -1, -2]
     return momentums
 
+
 def octavify(timeline_, time, note_length, root, enabled):
+    """Adds note to timeline, octavified if enabled."""
     if enabled:
         timeline_.add(time, timeline.Hit(root.transpose(-12), note_length / 2))
-        timeline_.add(time + 0.5*note_length, timeline.Hit(root, note_length / 2))
+        timeline_.add(time + 0.5 * note_length, timeline.Hit(root, note_length / 2))
     else:
         timeline_.add(time, timeline.Hit(root.transpose(-12), note_length))
     time = time + note_length
