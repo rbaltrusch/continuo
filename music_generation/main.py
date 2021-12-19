@@ -18,6 +18,7 @@ from postprocessing import fix_harmony
 from rhythm import make_rhythm
 from rhythm import octavify
 
+#pylint: disable=unspecified-encoding
 
 def init():
     """Define key and scale"""

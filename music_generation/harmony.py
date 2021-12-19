@@ -9,13 +9,9 @@ from random import choice
 
 def get_consonance(note1, note2):
     """returns a measure of consonance (between 0 and 1) of two notes (type double)"""
-    consonance_value = 0
-    if isinstance(note1, int) and isinstance(note2, int):
-        diff = abs(note1 - note2) % 7
-        consonance_dict = {0: 0.25, 1: -0.25, 2: 1, 3: 0.5, 4: 0.5, 5: 1, 6: -0.25}
-        if diff in consonance_dict.keys():
-            consonance_value = consonance_dict[diff]
-    return consonance_value
+    diff = abs(note1 - note2) % 7
+    consonance_dict = {0: 0.25, 1: -0.25, 2: 1, 3: 0.5, 4: 0.5, 5: 1, 6: -0.25}
+    return consonance_dict.get(diff, 0)
 
 
 def get_momentum(momentums, chosen_momentum=1, momentum_number=7):
