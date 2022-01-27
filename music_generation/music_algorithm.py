@@ -33,7 +33,7 @@ def make_piece(params, scale_len) -> List[Notes]:
                 )
             else:
                 sophistication = 1
-                layers_ = [x[-params.motif_length:] for x in layers]
+                layers_ = [x[-params.motif_length:] for x in layers[:j]]
                 motifs = [harmony.make_motif(layers_, sophistication, scale_len,
                                              params.intervals, params.motif_length)
                           for _ in range(250)]

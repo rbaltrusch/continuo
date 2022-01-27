@@ -34,8 +34,10 @@ def get_next_chord(chord: int) -> int:
 def make_progression(length: int) -> List[int]:
     """returns a chord progression (list of doubles), starting with 0 and
     ending with 4, i.e. root and fifth, respectively"""
-    note = 0
-    return [0] + [note := get_next_chord(note) for _ in range(length - 2)] + [4]
+    notes = [0]
+    for _ in range(length - 2):
+        notes.append(get_next_chord(notes[-1]))
+    return notes + [4]
 
 
 def make_motif(layers, sophistication, scale_len, intervals, motif_length) -> List[int]:
@@ -43,10 +45,9 @@ def make_motif(layers, sophistication, scale_len, intervals, motif_length) -> Li
     with notes in existing layers"""
     momentums = list(range(-2, 3))
     motif = random.choices(range(scale_len), k=1)
-    for i in range(motif_length - 1):
-        notes = [motif[-1] + random.choice(momentums) * random.choice(intervals)
+    for notes in zip(*layers[:motif_length-1]):
+        new_notes = [motif[-1] + random.choice(momentums) * random.choice(intervals)
                  for _ in range(sophistication)]
-        note = max(notes, key=lambda x: mean([get_consonance(layer[i], x)
-                                              for layer in layers if layer]))
-        motif.append(note)
+        new_note = max(new_notes, key=lambda x: mean([get_consonance(note, x) for note in notes]))
+        motif.append(new_note)
     return motif

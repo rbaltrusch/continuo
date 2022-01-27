@@ -48,7 +48,7 @@ def render_timeline(timeline_, layers, params, scale):
             timeline_.append_note(note, params.eigth, octavify=not i)
 
 
-def main(play=False, save=False):
+def main():
     """Main function"""
     scale = Scale("A3", "major")
     params = Params()
