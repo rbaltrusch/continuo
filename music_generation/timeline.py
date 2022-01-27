@@ -29,19 +29,19 @@ from musical.audio import source
 
 class Hit:
 
-    """ Rough draft of Hit class. Stores information about the hit and generates
+    """Rough draft of Hit class. Stores information about the hit and generates
       the audio array accordingly. Currently implements a basic cache to avoid
       having to rerender identical hits
   """
 
-    cache = {}
+    cache = {} #type: ignore
 
     def __init__(self, note, length):
         self.note = note
         self.length = length
 
     def render(self):
-        # Render hit of "key" for "length" amound of seconds
+        """Render hit of "key" for "length" amound of seconds"""
         key = (str(self.note), self.length)
         if key not in Hit.cache:
             Hit.cache[key] = source.square(self.note, self.length)
@@ -50,31 +50,43 @@ class Hit:
 
 class Timeline:
 
-    """ Rough draft of Timeline class. Handles the timing and mixing of Hits
-  """
+    """Rough draft of Timeline class. Handles the timing and mixing of Hits"""
 
     def __init__(self, rate=44100):
         self.rate = rate
         self.hits = defaultdict(list)
+        self._time = 0
 
-    def add(self, time, hit):
-        # Add "hit" at "time" seconds in
-        self.hits[time].append(hit)
+    def set_time(self, time: int):
+        """Sets the time to the passed value"""
+        self._time = time
+
+    def add(self, hit):
+        """Add "hit" at "time" seconds in"""
+        self.hits[self._time].append(hit)
+        self._time += hit.length
 
     def calculate_length(self):
-        # Determine length of playback from end of last hit
+        """Determine length of playback from end of last hit"""
         length = 0.0
         for time, hits in self.hits.items():
             for hit in hits:
                 length = max(length, time + hit.length)
         return length
 
-    def render(self):
-        # Return timeline as audio array by rendering the hits
+    def render(self, volume=1):
+        """Return timeline as audio array by rendering the hits"""
         out = source.silence(self.calculate_length())
         for time, hits in self.hits.items():
             index = int(time * self.rate)
             for hit in hits:
                 data = hit.render()
                 out[index : index + len(data)] += data
-        return out
+        return out * volume
+
+    def append_note(self, note, note_length, octavify=False):
+        """Adds note to timeline, octavified if enabled."""
+        if octavify:
+            note_length /= 2
+            self.add(Hit(note.transpose(-12), note_length))
+        self.add(Hit(note, note_length))
