@@ -4,6 +4,7 @@ Created on Sat Jun  1 15:59:04 2019
 
 @author: Korean_Crimson
 """
+import functools
 import random
 from statistics import mean
 from typing import List
@@ -45,9 +46,11 @@ def make_motif(layers, sophistication, scale_len, intervals, motif_length) -> Li
     with notes in existing layers"""
     momentums = list(range(-2, 3))
     motif = random.choices(range(scale_len), k=1)
+    def get_note_consonance(notes_, note):
+        return mean([get_consonance(x, note) for x in notes_])
     for notes in zip(*layers[:motif_length-1]):
         new_notes = [motif[-1] + random.choice(momentums) * random.choice(intervals)
                  for _ in range(sophistication)]
-        new_note = max(new_notes, key=lambda x: mean([get_consonance(note, x) for note in notes]))
+        new_note = max(new_notes, key=functools.partial(get_note_consonance, notes))
         motif.append(new_note)
     return motif
