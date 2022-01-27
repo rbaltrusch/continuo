@@ -24,6 +24,15 @@ To install all python dependencies, run the following in your command line:
 
     python -m pip install -r requirements.txt
 
+To run the music generator, run the main file:
+
+    cd music_generation
+    python main.py
+
+## Example music
+
+Example music can be found [here](example_music).
+
 ## Contributions
 
 All contributions are welcome! Please read the [contribution guidelines](CONTRIBUTING.md).
