@@ -7,7 +7,10 @@ Created on Sat Jun  1 15:53:15 2019
 from musical.audio import playback
 from musical.audio.source import sine
 
-from harmony import convert_from_db
+
+def convert_from_db(num_db):
+    """converts DB to decimal"""
+    return 10 ** (num_db / 10)
 
 
 def organ_sound(freq, time):
@@ -69,9 +72,7 @@ def organ_sound_test():
         [75, 112.5, 133.3, 150, 190, 225],
     ]
     for chord in chords:
-        data = 0
-        for note in chord:
-            data += organ_sound(freq=note * 5, time=3)
+        data = sum(organ_sound(freq=note * 5, time=3) for note in chord)
         playback.play(data)
 
 
