@@ -10,13 +10,12 @@ from typing import List
 class Layer:
     """Layer class, holds notes for one voice in the piece"""
 
-    notes: List[List[int]] = field(default_factory=list)
+    notes: List[int] = field(default_factory=list)
     octave: int = 0
 
     def extend(self, notes: List[int]):
         """Extends the layer by the specified notes"""
-        self.notes.append(notes)
-        print(notes)
+        self.notes.extend(notes)
 
     def __iter__(self):
         for note in self.notes:
