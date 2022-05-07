@@ -31,4 +31,4 @@ def write_configuration_file(filepath: str, music_generator: MusicGenerator) -> 
     """Writes the attributes of the specified music generator to the filepath provided."""
     dict_ = {k: v for k, v in music_generator.__dict__.items() if not callable(v)}
     with open(filepath, "w") as file:
-        json.dump(dict_, file)
+        json.dump(dict_, file, indent=4)
