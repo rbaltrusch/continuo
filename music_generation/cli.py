@@ -9,8 +9,10 @@ def construct_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--generate-config",
         "-g",
-        nargs=1,
+        nargs="?",
+        type=str,
         default="",
+        dest="config_filepath",
         help="Generates a template music configuration file under the specified filepath",
     )
 
@@ -28,14 +30,14 @@ def construct_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--layers",
-        "-n",
+        "-l",
         type=int,
         default=3,
-        help="The amount of layers to be generatedd",
+        help="The amount of layers to be generated",
     )
 
     parser.add_argument(
-        "--tempo", "-t", type=int, default=120, help="The tempo of the generated music"
+        "--tempo", "-t", type=int, default=60, help="The tempo of the generated music"
     )
 
     parser.add_argument(
@@ -47,15 +49,14 @@ def construct_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
-        "--lowest-note",
-        "-l",
+        "--base-note",
+        "-b",
         default="A3",
-        help="The lowest note used in the generated music",
+        help="The lowest note used in the generated music (e.g. A3)",
     )
 
     parser.add_argument(
         "--motif-length",
-        "-m",
         type=int,
         default=24,
         help="The length of the generated motifs",
@@ -66,8 +67,7 @@ def construct_parser() -> argparse.ArgumentParser:
         "-o",
         type=int,
         nargs="*",
-        action="append",
-        default=(0, 12, 12),
+        action="extend",
         help="The amount of semitones layers should be offset from base note",
     )
 
