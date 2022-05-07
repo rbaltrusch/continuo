@@ -24,6 +24,8 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import DefaultDict, List
 
+import numpy
+
 from musical.audio import source
 
 from music_generation.enums import Notes
@@ -90,7 +92,7 @@ class Timeline:
                 note = chord[Notes.ROOT.value].transpose(layer.octave)
                 self.append_note(note, self.eigth, octavify=not i)
 
-    def render(self, volume: float = 1):
+    def render(self, volume: float = 1) -> numpy.ndarray:
         """Return timeline as audio array by rendering the hits"""
         out = source.silence(self.calculate_length())
         for time, hits in self.hits.items():

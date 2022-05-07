@@ -7,7 +7,7 @@ Created on Thu Jan 27 16:45:05 2022
 import numpy
 import pygame
 
-def play(data, rate=44100):
+def play(data: numpy.ndarray, rate=44100):
     """Plays back the specified data using the pygame.mixer module"""
     pygame.mixer.quit()
     pygame.mixer.init(rate, -16, channels=2, buffer=1024)
