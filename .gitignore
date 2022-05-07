@@ -6,3 +6,4 @@ tests/reports/
 tests/htmlcov/
 .vscode/
 **/*.egg-info
+**/*.json
