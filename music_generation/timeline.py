@@ -21,6 +21,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 from collections import defaultdict
+from dataclasses import dataclass
+from typing import DefaultDict, List
 
 from musical.audio import source
 
@@ -48,13 +50,15 @@ class Hit:
         return Hit.cache[key]
 
 
+@dataclass
 class Timeline:
-
     """Rough draft of Timeline class. Handles the timing and mixing of Hits"""
 
-    def __init__(self, rate=44100):
-        self.rate = rate
-        self.hits = defaultdict(list)
+    rate: int = 44100
+    tempo: int = 120
+
+    def __post_init__(self):
+        self.hits: DefaultDict[float, List[Hit]] = defaultdict(list)
         self._time = 0
 
     def set_time(self, time: int):
