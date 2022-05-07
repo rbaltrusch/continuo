@@ -8,7 +8,7 @@ from dataclasses import dataclass
 import functools
 import random
 from statistics import mean
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from music_generation.layer import Layer
 
@@ -25,8 +25,8 @@ class MusicGenerator:
     sophistication: int = 1
     motif_length: int = 24
     scale_length: int = 7
-    momentums: List[int] = [-2, -1, 0, 1, 2]
-    intervals: List[int] = [5, 4, 3, 2, 1, 1, 0, 0]
+    momentums: Tuple[int] = (-2, -1, 0, 1, 2)  # type: ignore
+    intervals: Tuple[int] = (5, 4, 3, 2, 1, 1, 0, 0)  # type: ignore
     consonance_dict: Dict[int, float] = {
         0: 0.25,
         1: -0.25,
