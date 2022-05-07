@@ -4,7 +4,7 @@ Created on Sat Jun  1 16:03:40 2019
 
 @author: Korean_Crimson
 """
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import functools
 import random
 from statistics import mean
@@ -18,6 +18,30 @@ NUMBER_OF_VARIATIONS = 50000
 NUMBER_OF_MOTIFS = 250
 
 
+def get_default_consonance_dict() -> Dict[int, float]:
+    return {
+        0: 0.25,
+        1: -0.25,
+        2: 1,
+        3: 0.5,
+        4: 0.5,
+        5: 1,
+        6: -0.25,
+    }
+
+
+def get_default_harmony_dict() -> Dict[int, List[int]]:
+    return {
+        0: [6, 1, 3],
+        1: [4],
+        2: [1, 3],
+        3: [4],
+        4: [0, 5],
+        5: [6, 4, 3, 1],
+        6: [0, 5],
+    }
+
+
 @dataclass
 class MusicGenerator:
     """MusicGenerator class that generates a layered piece of motivic music"""
@@ -27,24 +51,10 @@ class MusicGenerator:
     scale_length: int = 7
     momentums: Tuple[int] = (-2, -1, 0, 1, 2)  # type: ignore
     intervals: Tuple[int] = (5, 4, 3, 2, 1, 1, 0, 0)  # type: ignore
-    consonance_dict: Dict[int, float] = {
-        0: 0.25,
-        1: -0.25,
-        2: 1,
-        3: 0.5,
-        4: 0.5,
-        5: 1,
-        6: -0.25,
-    }
-    harmony_dict: Dict[int, List[int]] = {
-        0: [6, 1, 3],
-        1: [4],
-        2: [1, 3],
-        3: [4],
-        4: [0, 5],
-        5: [6, 4, 3, 1],
-        6: [0, 5],
-    }
+    consonance_dict: Dict[int, float] = field(
+        default_factory=get_default_consonance_dict
+    )
+    harmony_dict: Dict[int, List[int]] = field(default_factory=get_default_harmony_dict)
 
     def get_consonance(self, note1: int, note2: int) -> float:
         """returns a measure of consonance (between 0 and 1) of two notes (type double)"""
