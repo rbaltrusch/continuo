@@ -4,19 +4,25 @@ Created on Thu Jan 27 17:50:33 2022
 
 @author: richa
 """
+from dataclasses import dataclass
+
 import musical.theory
 
-#pylint: disable=too-few-public-methods
+
+@dataclass
 class Scale:
     """Scale class"""
 
-    def __init__(self, key: str, tonality: str):
-        self.key = key
-        self.tonality = tonality
+    key: str
+    tonality: str
+    length: int = 7
+
+    def __post_init__(self):
         root = musical.theory.Note(self.key)
         self.scale = musical.theory.Scale(root, self.tonality)
-        self.chords = musical.theory.Chord.progression(self.scale, base_octave=root.octave)
-        self.length = 7
+        self.chords = musical.theory.Chord.progression(
+            self.scale, base_octave=root.octave
+        )
         self.notes = list(range(self.length))
 
     def __repr__(self):
