@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """Entry point to the music generator"""
 
+import os
+
+os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"  # hide pygame hello
+import logging
+
 from music_generation import (
     playback,
     layer,
@@ -12,7 +17,6 @@ from music_generation import (
 )
 from music_generation.scale import Scale
 
-#pylint: disable=no-member
 
 def read_config_file(config_file: str):
     """Reads in the specified config file"""
@@ -24,29 +28,30 @@ def read_config_file(config_file: str):
     )
 
 
-def generate_music(parser):
+def generate_music(args):
     """Generates music using the passed argparser"""
-    layers = layer.init_layers(parser.number_of_layers, parser.layer_offsets)
-    scale = Scale(key=parser.lowest_note, tonality=parser.mode)
+    layer_offsets = args.layer_offsets if args.layer_offsets else [0, 12, 12]
+    layers = layer.init_layers(
+        number_of_layers=args.layers, layer_offsets=layer_offsets
+    )
+    scale = Scale(key=args.base_note, tonality=args.mode)
 
-    kwargs = read_config_file(parser.config_file)
+    kwargs = read_config_file(args.config_filepath)
     music_generator = music_algorithm.MusicGenerator(
         scale_length=scale.length,
-        motif_length=parser.motif_length,
-        sophistication=parser.sophistication,
+        motif_length=args.motif_length,
+        sophistication=args.sophistication,
         **kwargs
     )
 
-    duration_ = (
-        duration.Duration(
-            time_length=parser.time_length,
-            tempo=parser.tempo,
-            motif_length=parser.motif_length,
-        ),
+    duration_ = duration.Duration(
+        time_length=args.time_length,
+        tempo=args.tempo,
+        motif_length=args.motif_length,
     )
 
-    music_algorithm.NUMBER_OF_MOTIFS = parser.motifs
-    music_algorithm.NUMBER_OF_VARIATIONS = parser.variations
+    music_algorithm.NUMBER_OF_MOTIFS = args.motifs
+    music_algorithm.NUMBER_OF_VARIATIONS = args.variations
     generator_ = generator.Generator(scale, duration_, music_generator)
     data = generator_.generate_music(layers)
     playback.play(data)
@@ -54,14 +59,21 @@ def generate_music(parser):
 
 def main():
     """Main function"""
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
+
     parser = cli.construct_parser()
-    if parser.generate_config:
+    args = parser.parse_args()
+    for name, value in vars(args).items():
+        if name != "config_filepath":
+            logging.info("Using setting %s: %s", name, value)
+
+    if args.config_filepath:
         config.write_configuration_file(
-            filepath=parser.generate_config,
+            filepath=args.config_filepath,
             music_generator=music_algorithm.MusicGenerator(),
         )
     else:
-        generate_music(parser)
+        generate_music(args)
 
 
 main()
