@@ -4,3 +4,4 @@ __pycache__
 **/.coverage
 tests/reports/
 tests/htmlcov/
+.vscode/
