@@ -30,7 +30,6 @@ from musical.audio import source
 #pylint: disable=missing-function-docstring
 
 class Hit:
-
     """Rough draft of Hit class. Stores information about the hit and generates
       the audio array accordingly. Currently implements a basic cache to avoid
       having to rerender identical hits
@@ -65,12 +64,12 @@ class Timeline:
         """Sets the time to the passed value"""
         self._time = time
 
-    def add(self, hit):
+    def add(self, hit: Hit):
         """Add "hit" at "time" seconds in"""
         self.hits[self._time].append(hit)
         self._time += hit.length
 
-    def calculate_length(self):
+    def calculate_length(self) -> float:
         """Determine length of playback from end of last hit"""
         length = 0.0
         for time, hits in self.hits.items():
@@ -88,7 +87,7 @@ class Timeline:
                 out[index : index + len(data)] += data
         return out * volume
 
-    def append_note(self, note, note_length, octavify=False):
+    def append_note(self, note, note_length, octavify=False) -> None:
         """Adds note to timeline, octavified if enabled."""
         if octavify:
             note_length /= 2
