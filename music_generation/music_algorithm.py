@@ -49,7 +49,7 @@ class MusicGenerator:
     sophistication: int = 1
     motif_length: int = 24
     scale_length: int = 7
-    momentums: Tuple[int] = (-2, -1, 0, 1, 2)  # type: ignore
+    momentums: Tuple[int] = (-1, 0, 1)  # type: ignore
     intervals: Tuple[int] = (5, 4, 3, 2, 1, 1, 0, 0)  # type: ignore
     consonance_dict: Dict[int, float] = field(
         default_factory=get_default_consonance_dict
