@@ -10,6 +10,7 @@ def construct_parser() -> argparse.ArgumentParser:
         "--generate-config",
         "-g",
         nargs=1,
+        default="",
         help="Generates a template music configuration file under the specified filepath",
     )
 

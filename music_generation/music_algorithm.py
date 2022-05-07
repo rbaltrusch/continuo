@@ -4,52 +4,135 @@ Created on Sat Jun  1 16:03:40 2019
 
 @author: Korean_Crimson
 """
+from dataclasses import dataclass
+import functools
 import random
 from statistics import mean
-from typing import List
+from typing import Dict, List
 
-import harmony
+from music_generation.layer import Layer
 
 
 Notes = List[int]
+NUMBER_OF_VARIATIONS = 50000
+NUMBER_OF_MOTIFS = 250
+
+
+@dataclass
+class MusicGenerator:
+    """MusicGenerator class that generates a layered piece of motivic music"""
+
+    sophistication: int = 1
+    motif_length: int = 24
+    scale_length: int = 7
+    momentums: List[int] = [-2, -1, 0, 1, 2]
+    intervals: List[int] = [5, 4, 3, 2, 1, 1, 0, 0]
+    consonance_dict: Dict[int, float] = {
+        0: 0.25,
+        1: -0.25,
+        2: 1,
+        3: 0.5,
+        4: 0.5,
+        5: 1,
+        6: -0.25,
+    }
+    harmony_dict: Dict[int, List[int]] = {
+        0: [6, 1, 3],
+        1: [4],
+        2: [1, 3],
+        3: [4],
+        4: [0, 5],
+        5: [6, 4, 3, 1],
+        6: [0, 5],
+    }
+
+    def get_consonance(self, note1: int, note2: int) -> float:
+        """returns a measure of consonance (between 0 and 1) of two notes (type double)"""
+        diff = abs(note1 - note2) % 7
+        return self.consonance_dict.get(diff, 0)
+
+    def get_most_consonant_motif(
+        self, motifs: List[Notes], layers: List[Layer]
+    ) -> Notes:
+        """returns list of notes (type double), after determining most consonant motif"""
+        return max(motifs, key=lambda x: self.get_motif_consonance(x, layers))
+
+    def get_motif_consonance(self, motif: Notes, layers: List[Layer]) -> float:
+        """Returns the consonance of the motif compared with existing notes in layers"""
+        consonances = [
+            mean([self.get_consonance(note, new_note) for note in notes])
+            for new_note, *notes in zip(motif, *layers)
+        ]
+        return mean(consonances) if consonances else 0
+
+    def make_progression(self) -> List[int]:
+        """returns a chord progression (list of doubles), starting with 0 and
+        ending with 4, i.e. root and fifth, respectively"""
+        notes = [0]
+        for _ in range(self.motif_length - 2):
+            notes.append(self._get_next_chord(notes[-1]))
+        motif = notes + [4]
+        return motif[: self.motif_length]
+
+    def make_motif(self, layers) -> List[int]:
+        """returns a motif (list of notes (type double)) based on maximum consonance
+        with notes in existing layers"""
+        motif = random.choices(range(self.scale_length), k=1)
+
+        def get_note_consonance(notes_, note):
+            return mean([self.get_consonance(x, note) for x in notes_])
+
+        for i, notes in enumerate(zip(*layers)):
+            if i >= self.motif_length:
+                break
+
+            new_notes = [
+                motif[-1] + self._get_random_note() for _ in range(self.sophistication)
+            ]
+            new_note = max(new_notes, key=functools.partial(get_note_consonance, notes))
+            motif.append(new_note)
+        return motif[: self.motif_length]
+
+    def _get_random_note(self) -> int:
+        return random.choice(self.momentums) * random.choice(self.intervals)
+
+    def _get_next_chord(self, chord: int) -> int:
+        """returns a random choice (double) of the available harmonic follow-ups
+        for the given chord (double)"""
+        return random.choice(self.harmony_dict[chord])
+
 
 def smooth_bass_line(bass_lines: List[Notes]) -> Notes:
     """Returns the bass line with the least number of leaps in it"""
-    return min(bass_lines, key=lambda x: sum(abs(note2 - note1) for note1, note2 in zip(x, x[1:])))
+    return min(
+        bass_lines,
+        key=lambda x: sum(abs(note2 - note1) for note1, note2 in zip(x, x[1:])),
+    )
+
 
 def create_variations(bass_line: Notes, num: int) -> List[Notes]:
     """returns list of lists containing inversions"""
     inversions = [0, 2, 4]
-    return [[note + random.choice(inversions) for note in bass_line] for _ in range(num)]
-
-def make_piece(params, scale_len) -> List[Notes]:
-    """returns layers of notes"""
-    layers: List[Notes] = [[] for _ in range(params.number_of_layers)]
-    for _ in range(params.length):
-        for j, layer in enumerate(layers):
-            if not j:
-                motif = smooth_bass_line(
-                    create_variations(harmony.make_progression(params.motif_length), num=50000)
-                )
-            else:
-                sophistication = 1
-                layers_ = [x[-params.motif_length:] for x in layers[:j]]
-                motifs = [harmony.make_motif(layers_, sophistication, scale_len,
-                                             params.intervals, params.motif_length)
-                          for _ in range(250)]
-                motif = get_most_consonant_motif(motifs, layers)
-            new_motif = motif[:params.motif_length]
-            layer.extend(new_motif)
-            print(j, new_motif)
-    return layers
+    return [
+        [note + random.choice(inversions) for note in bass_line] for _ in range(num)
+    ]
 
 
-def get_most_consonant_motif(motifs: List[Notes], layers: List[Notes]) -> Notes:
-    """returns list of notes (type double), after determining most consonant motif"""
-    return max(motifs, key=lambda x: get_motif_consonance(x, layers))
+def make_piece(layers: List[Layer], music_generator: MusicGenerator):
+    """Generates notes using the provided music generator
+    and appends them to the specified layers
+    """
+    if not layers:
+        return
 
-def get_motif_consonance(motif: Notes, layers: List[Notes]) -> float:
-    """Returns the consonance of the motif compared with existing notes in layers"""
-    consonances = [mean([harmony.get_consonance(note, new_note) for note in notes])
-                        for i, (new_note, *notes) in enumerate(zip(motif, *layers))]
-    return mean(consonances) if consonances else 0
+    motif = smooth_bass_line(
+        create_variations(music_generator.make_progression(), num=NUMBER_OF_VARIATIONS)
+    )
+    layers[0].extend(motif)
+
+    for j, layer in enumerate(layers[1:], 1):
+        motifs = [
+            music_generator.make_motif(layers[:j]) for _ in range(NUMBER_OF_MOTIFS)
+        ]
+        motif = music_generator.get_most_consonant_motif(motifs, layers)
+        layer.extend(motif)
