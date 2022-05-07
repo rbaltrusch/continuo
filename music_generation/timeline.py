@@ -26,6 +26,10 @@ from typing import DefaultDict, List
 
 from musical.audio import source
 
+from music_generation.enums import Notes
+from music_generation.scale import Scale
+from music_generation.layer import Layer
+
 #pylint: disable=too-few-public-methods
 #pylint: disable=missing-function-docstring
 
@@ -77,7 +81,16 @@ class Timeline:
                 length = max(length, time + hit.length)
         return length
 
-    def render(self, volume=1):
+    def construct(self, layers: List[Layer], scale: Scale) -> None:
+        """Rendering the timeline"""
+        for i, layer in enumerate(layers):
+            self.set_time(0)
+            for note in map(lambda x: x % scale.length, layer):
+                chord = [*scale.chords[note]]
+                note = chord[Notes.ROOT.value].transpose(layer.octave)
+                self.append_note(note, self.eigth, octavify=not i)
+
+    def render(self, volume: float = 1):
         """Return timeline as audio array by rendering the hits"""
         out = source.silence(self.calculate_length())
         for time, hits in self.hits.items():
@@ -93,3 +106,7 @@ class Timeline:
             note_length /= 2
             self.add(Hit(note.transpose(-12), note_length))
         self.add(Hit(note, note_length))
+
+    @property
+    def eigth(self) -> float:
+        return (60 / self.tempo) / 2
