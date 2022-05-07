@@ -12,8 +12,10 @@ from music_generation import (
 )
 from music_generation.scale import Scale
 
+#pylint: disable=no-member
 
 def read_config_file(config_file: str):
+    """Reads in the specified config file"""
     if not config_file:
         return {}
     return config.read_configuration_file(
@@ -23,6 +25,7 @@ def read_config_file(config_file: str):
 
 
 def generate_music(parser):
+    """Generates music using the passed argparser"""
     layers = layer.init_layers(parser.number_of_layers, parser.layer_offsets)
     scale = Scale(key=parser.lowest_note, tonality=parser.mode)
 
@@ -42,16 +45,23 @@ def generate_music(parser):
         ),
     )
 
+    music_algorithm.NUMBER_OF_MOTIFS = parser.motifs
+    music_algorithm.NUMBER_OF_VARIATIONS = parser.variations
     generator_ = generator.Generator(scale, duration_, music_generator)
     data = generator_.generate_music(layers)
     playback.play(data)
 
 
-parser = cli.construct_parser()
-if parser.generate_config:
-    config.write_configuration_file(
-        filepath=parser.generate_config,
-        music_generator=music_algorithm.MusicGenerator(),
-    )
-else:
-    generate_music(parser)
+def main():
+    """Main function"""
+    parser = cli.construct_parser()
+    if parser.generate_config:
+        config.write_configuration_file(
+            filepath=parser.generate_config,
+            music_generator=music_algorithm.MusicGenerator(),
+        )
+    else:
+        generate_music(parser)
+
+
+main()
