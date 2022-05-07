@@ -65,13 +65,13 @@ optional arguments:
   --variations VARIATIONS, -v VARIATIONS
                         The amount of motif variations to be considered
   --motifs MOTIFS       The amount of motifs to be considered
-  ```
+```
 
-  The help message can be brought up by running:
+The help message can be brought up by running:
 
-  ```
-  python -m music_generation -h
-  ```
+```
+python -m music_generation -h
+```
 
 ### Configuration file
 
