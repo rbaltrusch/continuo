@@ -24,6 +24,3 @@ class Scale:
             self.scale, base_octave=root.octave
         )
         self.notes = list(range(self.length))
-
-    def __repr__(self):
-        return f"{self.key} {self.tonality}"
