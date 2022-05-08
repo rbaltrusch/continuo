@@ -44,7 +44,6 @@ def construct_parser() -> argparse.ArgumentParser:
         "-f",
         choices=["wav", "json"],
         nargs="*",
-        default=["wav"],
         type=str,
         action="extend",
         dest="save_formats",

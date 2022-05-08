@@ -76,7 +76,8 @@ def save_to_file(args, data, layers):
         "json": functools.partial(output.save_to_json, layers),
     }
 
-    for format_ in set(args.save_formats):
+    save_formats = ["wav"] if not args.save_formats else args.save_formats
+    for format_ in set(save_formats):
         filepath = "{}.{}".format(os.path.splitext(args.save_filepath)[0], format_)
         formats[format_](filepath)
 
