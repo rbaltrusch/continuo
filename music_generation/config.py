@@ -16,7 +16,7 @@ def read_configuration_file(
     """Reads in the specified configuration file.
     Raises a ConfigurationError if configuration file does not contain all required fields.
     """
-    with open(filepath, "r") as file:
+    with open(filepath, "r", encoding="utf-8") as file:
         contents = json.load(file)
 
     for field in required_fields:
@@ -30,5 +30,5 @@ def read_configuration_file(
 def write_configuration_file(filepath: str, music_generator: MusicGenerator) -> None:
     """Writes the attributes of the specified music generator to the filepath provided."""
     dict_ = {k: v for k, v in music_generator.__dict__.items() if not callable(v)}
-    with open(filepath, "w") as file:
+    with open(filepath, "w", encoding="utf-8") as file:
         json.dump(dict_, file, indent=4)

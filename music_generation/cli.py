@@ -5,6 +5,7 @@ import argparse
 
 
 def construct_parser() -> argparse.ArgumentParser:
+    """Constructs and returns the command line argument parser"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--generate-config",

@@ -19,6 +19,7 @@ NUMBER_OF_MOTIFS = 250
 
 
 def get_default_consonance_dict() -> Dict[int, float]:
+    """Returns the default mapping of septatonic note to consonance"""
     return {
         0: 0.25,
         1: -0.25,
@@ -31,6 +32,7 @@ def get_default_consonance_dict() -> Dict[int, float]:
 
 
 def get_default_harmony_dict() -> Dict[int, List[int]]:
+    """Returns the default mapping of septatonic note to possible following notes"""
     return {
         0: [6, 1, 3],
         1: [4],

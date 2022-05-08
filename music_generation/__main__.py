@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Entry point to the music generator"""
 
+# pylint: disable=wrong-import-position
 import os
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"  # hide pygame hello
