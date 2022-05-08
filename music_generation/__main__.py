@@ -60,6 +60,7 @@ def construct_generator(args) -> generator.Generator:
 
 
 def construct_layers(args) -> List[layer.Layer]:
+    """Loads layers from file or constructs new ones"""
     if args.load_filepath:
         return output.load_from_json(args.load_filepath)
 
@@ -71,11 +72,13 @@ def construct_layers(args) -> List[layer.Layer]:
 
 
 def save_to_file(args, data, layers):
+    """Saves data and layers to all specified formats"""
     formats = {
         "wav": functools.partial(output.save_to_wav_file, data),
         "json": functools.partial(output.save_to_json, layers),
     }
 
+    # pylint: disable=consider-using-f-string
     save_formats = ["wav"] if not args.save_formats else args.save_formats
     for format_ in set(save_formats):
         filepath = "{}.{}".format(os.path.splitext(args.save_filepath)[0], format_)
@@ -83,6 +86,7 @@ def save_to_file(args, data, layers):
 
 
 def generate_music(args) -> None:
+    """Generates music"""
     setup_music_generation(args)
     layers = construct_layers(args)
     generator_ = construct_generator(args)
