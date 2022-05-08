@@ -17,13 +17,20 @@ def read_configuration_file(
     Raises a ConfigurationError if configuration file does not contain all required fields.
     """
     with open(filepath, "r", encoding="utf-8") as file:
-        contents = json.load(file)
+        contents: Dict[str, Any] = json.load(file)
 
     for field in required_fields:
         if field not in contents:
             raise ConfigurationError(
                 f"Invalid configuration file, missing required field {field}"
             )
+
+    for name, value in contents.items():
+        if isinstance(value, dict):
+            contents[name] = {
+                (int(k) if k.isnumeric() else k): v for k, v in value.items()
+            }
+
     return contents
 
 
