@@ -4,20 +4,28 @@ Created on Thu Jan 27 13:44:31 2022
 
 @author: richa
 """
+import json
+from typing import List
+
+import numpy
 from musical.audio.save import save_wave
 
-#pylint: disable=unspecified-encoding
-def save_to_file(layers, data):
-    """gives choice to save generated piece to text file"""
-    title = input("Please input the title under which you wish to save: ")
-    save_wave(data, f"{title}.wav")
-    with open(f"{title}.txt", "w+") as file:
-        for layer in layers:
-            file.write(" ".join(map(str, layer)))
+from music_generation.layer import Layer
 
 
-def load_from_file():
-    """gives choice of loading piece from saved text file"""
-    with open(input("Please input the text file title: "), "r") as file:
-        contents = file.read().split("*")
-    return [[int(num) for num in content.split() if num.isdigit()] for content in contents[:-1]]
+def save_to_wav_file(data: numpy.ndarray, filepath: str) -> None:
+    """Saves the data to a wavfile"""
+    save_wave(data, filepath)
+
+
+def save_to_json(layers: List[Layer], filepath: str) -> None:
+    """Saves the layers to a json file"""
+    with open(filepath, "w", encoding="utf-8") as file:
+        json.dump([layer.__dict__ for layer in layers], file, indent=4)
+
+
+def load_from_json(filepath: str) -> List[Layer]:
+    """Loads the layers from a json file"""
+    with open(filepath, "r", encoding="utf-8") as file:
+        contents = json.load(file)
+    return [Layer(**dict_) for dict_ in contents]
