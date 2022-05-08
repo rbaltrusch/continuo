@@ -7,3 +7,5 @@ tests/htmlcov/
 .vscode/
 **/*.egg-info
 **/*.json
+**/*.wav
+!example_music/**/*.wav
