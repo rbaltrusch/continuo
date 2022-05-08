@@ -45,7 +45,7 @@ class Hit:
     having to rerender identical hits.
     """
 
-    cache = {} #type: ignore
+    cache = {}  # type: ignore
 
     def __init__(self, note, length):
         self.note = note

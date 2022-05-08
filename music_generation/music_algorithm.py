@@ -89,23 +89,22 @@ class MusicGenerator:
     def make_motif(self, layers) -> List[int]:
         """returns a motif (list of notes (type double)) based on maximum consonance
         with notes in existing layers"""
-        motif = random.choices(range(self.scale_length), k=1)
-
         def get_note_consonance(notes_, note):
             return mean([self.get_consonance(x, note) for x in notes_])
 
+        motif = random.choices(range(self.scale_length), k=1)
         for i, notes in enumerate(zip(*layers)):
             if i >= self.motif_length:
                 break
 
             new_notes = [
-                motif[-1] + self._get_random_note() for _ in range(self.sophistication)
+                motif[-1] + self._get_random_interval() for _ in range(self.sophistication)
             ]
             new_note = max(new_notes, key=functools.partial(get_note_consonance, notes))
             motif.append(new_note)
         return motif[: self.motif_length]
 
-    def _get_random_note(self) -> int:
+    def _get_random_interval(self) -> int:
         return random.choice(self.momentums) * random.choice(self.intervals)
 
     def _get_next_chord(self, chord: int) -> int:
@@ -122,7 +121,7 @@ def smooth_bass_line(bass_lines: List[Notes]) -> Notes:
     )
 
 
-def create_variations(bass_line: Notes, num: int) -> List[Notes]:
+def create_variations(bass_line: Notes, num: int = 1) -> List[Notes]:
     """returns list of lists containing inversions"""
     inversions = [0, 2, 4]
     return [
