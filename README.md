@@ -35,18 +35,36 @@ The application supports configuration of almost every configurable setting dire
 A full list of the available arguments is listed below:
 
 ```
-usage: __main__.py [-h] [--generate-config [CONFIG_FILEPATH]] [--config-file CONFIG_FILE] [--time-length TIME_LENGTH]
-                   [--layers LAYERS] [--tempo TEMPO] [--mode {major,minor}] [--base-note BASE_NOTE]
-                   [--motif-length MOTIF_LENGTH] [--layer-offsets [LAYER_OFFSETS [LAYER_OFFSETS ...]]]
-                   [--sophistication SOPHISTICATION] [--variations VARIATIONS] [--motifs MOTIFS]
+usage: __main__.py [-h] [--generate-config [CONFIG_FILEPATH]]
+                   [--config-file CONFIG_FILE] [--playback {True,False}]
+                   [--save [SAVE_FILEPATH]]
+                   [--format [{wav,json} [{wav,json} ...]]]
+                   [--load [LOAD_FILEPATH]] [--time-length TIME_LENGTH]
+                   [--layers LAYERS] [--tempo TEMPO] [--mode {major,minor}]
+                   [--base-note BASE_NOTE] [--motif-length MOTIF_LENGTH]
+                   [--layer-offsets [LAYER_OFFSETS [LAYER_OFFSETS ...]]]
+                   [--sophistication SOPHISTICATION] [--variations VARIATIONS]
+                   [--motifs MOTIFS]
 
 optional arguments:
   -h, --help            show this help message and exit
   --generate-config [CONFIG_FILEPATH], -g [CONFIG_FILEPATH]
-                        Generates a template music configuration file under the specified filepath
+                        Generates a template music configuration file under
+                        the specified filepath
   --config-file CONFIG_FILE, -c CONFIG_FILE
                         The filepath of a music configuration file
-  --time-length TIME_LENGTH, --time TIME_LENGTH
+  --playback {True,False}, -p {True,False}
+                        Determines whether the generated music should be
+                        played back
+  --save [SAVE_FILEPATH], -s [SAVE_FILEPATH]
+                        Saves the generated music to a wav-file under the
+                        specified filepath
+  --format [{wav,json} [{wav,json} ...]], -f [{wav,json} [{wav,json} ...]]
+                        The formats which should be used when saving the
+                        generated music to file
+  --load [LOAD_FILEPATH], -lo [LOAD_FILEPATH]
+                        The filepath of a saved music json file
+  --time-length TIME_LENGTH, --time TIME_LENGTH, -ti TIME_LENGTH
                         The length of time the generated music should last
   --layers LAYERS, -l LAYERS
                         The amount of layers to be generated
@@ -56,15 +74,18 @@ optional arguments:
                         The mode of the generated music
   --base-note BASE_NOTE, -b BASE_NOTE
                         The lowest note used in the generated music (e.g. A3)
-  --motif-length MOTIF_LENGTH
+  --motif-length MOTIF_LENGTH, -ml MOTIF_LENGTH
                         The length of the generated motifs
   --layer-offsets [LAYER_OFFSETS [LAYER_OFFSETS ...]], -o [LAYER_OFFSETS [LAYER_OFFSETS ...]]
-                        The amount of semitones layers should be offset from base note
-  --sophistication SOPHISTICATION, -s SOPHISTICATION
-                        The amount of options that should be considered when generating new notes
+                        The amount of semitones layers should be offset from
+                        base note
+  --sophistication SOPHISTICATION, -so SOPHISTICATION
+                        The amount of options that should be considered when
+                        generating new notes
   --variations VARIATIONS, -v VARIATIONS
                         The amount of motif variations to be considered
   --motifs MOTIFS       The amount of motifs to be considered
+
 ```
 
 The help message can be brought up by running:
