@@ -89,7 +89,7 @@ class Timeline:
             self.set_time(0)
             for note in map(lambda x: x % scale.length, layer):
                 chord = [*scale.chords[note]]
-                note = chord[Notes.ROOT.value].transpose(layer.octave)
+                note = chord[Notes.ROOT.value].transpose(layer.offset)
                 self.append_note(note, self.eigth, octavify=not i)
 
     def render(self, volume: float = 1) -> numpy.ndarray:
