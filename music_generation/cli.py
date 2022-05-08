@@ -22,8 +22,49 @@ def construct_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--playback",
+        "-p",
+        choices=["True", "False"],
+        default="True",
+        help="Determines whether the generated music should be played back",
+    )
+
+    parser.add_argument(
+        "--save",
+        "-s",
+        nargs="?",
+        type=str,
+        default="",
+        dest="save_filepath",
+        help="Saves the generated music to a wav-file under the specified filepath",
+    )
+
+    parser.add_argument(
+        "--format",
+        "-f",
+        choices=["wav", "json"],
+        nargs="*",
+        default=["wav"],
+        type=str,
+        action="extend",
+        dest="save_formats",
+        help="The formats which should be used when saving the generated music to file",
+    )
+
+    parser.add_argument(
+        "--load",
+        "-lo",
+        nargs="?",
+        type=str,
+        default="",
+        dest="load_filepath",
+        help="The filepath of a saved music json file",
+    )
+
+    parser.add_argument(
         "--time-length",
         "--time",
+        "-ti",
         type=int,
         default=30,
         help="The length of time the generated music should last",
@@ -58,6 +99,7 @@ def construct_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--motif-length",
+        "-ml",
         type=int,
         default=24,
         help="The length of the generated motifs",
@@ -74,7 +116,7 @@ def construct_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--sophistication",
-        "-s",
+        "-so",
         type=int,
         default=1,
         help="The amount of options that should be considered when generating new notes",
