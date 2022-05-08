@@ -3,8 +3,11 @@
 
 # pylint: disable=wrong-import-position
 import os
+from typing import List
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"  # hide pygame hello
+
+import functools
 import logging
 
 from music_generation import (
@@ -15,6 +18,7 @@ from music_generation import (
     music_algorithm,
     cli,
     config,
+    output,
 )
 from music_generation.scale import Scale
 
@@ -29,12 +33,13 @@ def read_config_file(config_file: str):
     )
 
 
-def generate_music(args):
+def setup_music_generation(args) -> None:
+    music_algorithm.NUMBER_OF_MOTIFS = args.motifs
+    music_algorithm.NUMBER_OF_VARIATIONS = args.variations
+
+
+def construct_generator(args) -> generator.Generator:
     """Generates music using the passed argparser"""
-    layer_offsets = args.layer_offsets if args.layer_offsets else [0, 12, 12]
-    layers = layer.init_layers(
-        number_of_layers=args.layers, layer_offsets=layer_offsets
-    )
     scale = Scale(key=args.base_note, tonality=args.mode)
 
     kwargs = read_config_file(args.config_filepath)
@@ -51,11 +56,42 @@ def generate_music(args):
         motif_length=args.motif_length,
     )
 
-    music_algorithm.NUMBER_OF_MOTIFS = args.motifs
-    music_algorithm.NUMBER_OF_VARIATIONS = args.variations
-    generator_ = generator.Generator(scale, duration_, music_generator)
+    return generator.Generator(scale, duration_, music_generator)
+
+
+def construct_layers(args) -> List[layer.Layer]:
+    if args.load_filepath:
+        return output.load_from_json(args.load_filepath)
+
+    layer_offsets = args.layer_offsets if args.layer_offsets else [0, 12, 12]
+    layers = layer.init_layers(
+        number_of_layers=args.layers, layer_offsets=layer_offsets
+    )
+    return layers
+
+
+def save_to_file(args, data, layers):
+    formats = {
+        "wav": functools.partial(output.save_to_wav_file, data),
+        "json": functools.partial(output.save_to_json, layers),
+    }
+
+    for format_ in set(args.save_formats):
+        filepath = "{}.{}".format(os.path.splitext(args.save_filepath)[0], format_)
+        formats[format_](filepath)
+
+
+def generate_music(args) -> None:
+    setup_music_generation(args)
+    layers = construct_layers(args)
+    generator_ = construct_generator(args)
     data = generator_.generate_music(layers)
-    playback.play(data)
+
+    if args.playback == "True":
+        playback.play(data)
+
+    if args.save_filepath:
+        save_to_file(args, data, layers)
 
 
 def main():
