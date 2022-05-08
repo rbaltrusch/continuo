@@ -30,6 +30,14 @@ def construct_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--volume",
+        "-v",
+        type=int,
+        default=1,
+        help="The volume of the generated music (default 1)",
+    )
+
+    parser.add_argument(
         "--save",
         "-s",
         nargs="?",
@@ -123,7 +131,7 @@ def construct_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--variations",
-        "-v",
+        "-va",
         type=int,
         default=50000,
         help="The amount of motif variations to be considered",

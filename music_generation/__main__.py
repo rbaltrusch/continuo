@@ -56,7 +56,7 @@ def construct_generator(args) -> generator.Generator:
         motif_length=args.motif_length,
     )
 
-    return generator.Generator(scale, duration_, music_generator)
+    return generator.Generator(scale, duration_, music_generator, volume=args.volume)
 
 
 def construct_layers(args) -> List[layer.Layer]:

@@ -14,6 +14,7 @@ class Generator:
     scale: scale.Scale
     duration: duration.Duration
     music_generator: music_algorithm.MusicGenerator
+    volume: float = 0.05
 
     def generate_music(self, layers: List[layer.Layer]):
         """Generates layered music and returns it as an numpy.ndarray of audio data"""
@@ -22,5 +23,5 @@ class Generator:
 
         timeline_ = timeline.Timeline(tempo=self.duration.tempo)
         timeline_.construct(layers, self.scale)
-        data = timeline_.render(volume=0.05)
+        data = timeline_.render(volume=self.volume)
         return data

@@ -33,8 +33,11 @@ from music_generation.enums import Notes
 from music_generation.scale import Scale
 from music_generation.layer import Layer
 
-#pylint: disable=too-few-public-methods
-#pylint: disable=missing-function-docstring
+# pylint: disable=too-few-public-methods
+# pylint: disable=missing-function-docstring
+
+VOLUME_SCALING = 0.05
+
 
 class Hit:
     """Rough draft of Hit class. Stores information about the hit and generates
@@ -101,7 +104,7 @@ class Timeline:
             for hit in hits:
                 data = hit.render()
                 out[index : index + len(data)] += data
-        return out * volume
+        return out * volume * VOLUME_SCALING
 
     def append_note(self, note, note_length, octavify=False) -> None:
         """Adds note to timeline, octavified if enabled."""
