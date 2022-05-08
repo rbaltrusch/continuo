@@ -66,7 +66,7 @@ def construct_parser() -> argparse.ArgumentParser:
         "--time",
         "-ti",
         type=int,
-        default=30,
+        default=10,
         help="The length of time the generated music should last",
     )
 
