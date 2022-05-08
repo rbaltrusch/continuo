@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import DefaultDict, List
@@ -37,9 +38,9 @@ from music_generation.layer import Layer
 
 class Hit:
     """Rough draft of Hit class. Stores information about the hit and generates
-      the audio array accordingly. Currently implements a basic cache to avoid
-      having to rerender identical hits
-  """
+    the audio array accordingly. Currently implements a basic cache to avoid
+    having to rerender identical hits.
+    """
 
     cache = {} #type: ignore
 
