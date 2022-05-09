@@ -35,6 +35,7 @@ def read_config_file(config_file: str):
 
 
 def setup_music_generation(args) -> None:
+    """Sets up music generation constants and random seed"""
     music_algorithm.NUMBER_OF_MOTIFS = args.motifs
     music_algorithm.NUMBER_OF_VARIATIONS = args.variations
     if args.seed is not None:
