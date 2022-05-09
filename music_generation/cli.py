@@ -122,6 +122,10 @@ def construct_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--seed", "-se", type=int, nargs="?", help="The seed for random note generation"
+    )
+
+    parser.add_argument(
         "--sophistication",
         "-so",
         type=int,

@@ -257,3 +257,16 @@ def test_motifs(input_args, expected):
     parser = cli.construct_parser()
     args = parser.parse_args(input_args.split())
     assert args.volume == expected
+
+
+@pytest.mark.parametrize(
+    "input_args, expected",
+    [
+        ("--seed 20", 20),
+        ("-se 252", 252),
+    ],
+)
+def test_motifs(input_args, expected):
+    parser = cli.construct_parser()
+    args = parser.parse_args(input_args.split())
+    assert args.seed == expected

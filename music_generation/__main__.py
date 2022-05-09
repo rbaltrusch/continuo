@@ -3,6 +3,7 @@
 
 # pylint: disable=wrong-import-position
 import os
+import random
 from typing import List
 
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"  # hide pygame hello
@@ -36,6 +37,8 @@ def read_config_file(config_file: str):
 def setup_music_generation(args) -> None:
     music_algorithm.NUMBER_OF_MOTIFS = args.motifs
     music_algorithm.NUMBER_OF_VARIATIONS = args.variations
+    if args.seed is not None:
+        random.seed(args.seed)
 
 
 def construct_generator(args) -> generator.Generator:
@@ -118,4 +121,5 @@ def main():
         generate_music(args)
 
 
-main()
+if __name__ == "__main__":
+    main()
