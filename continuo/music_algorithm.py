@@ -10,7 +10,7 @@ import random
 from statistics import mean
 from typing import Dict, List, Tuple
 
-from music_generation.layer import Layer
+from continuo.layer import Layer
 
 
 Notes = List[int]
