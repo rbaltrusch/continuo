@@ -7,19 +7,19 @@ import setuptools
 project_dir = Path(__file__).parent
 
 setuptools.setup(
-    name="music_generation",
-    version="1.0.0",
-    description="Music generation",
+    name="continuo",
+    version="0.1.0",
+    description="Procedural music generator",
     long_description=project_dir.joinpath("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
     keywords=["python"],
     author="Richard Baltrusch",
-    url="https://github.com/rbaltrusch/music_generation",
+    url="https://github.com/rbaltrusch/continuo",
     packages=setuptools.find_packages("."),
     package_dir={"": "."},
     python_requires=">=3.8",
     include_package_data=True,
-    package_data={"music_generation": ["py.typed"]}, # for mypy
+    package_data={"continuo": ["py.typed"]}, # for mypy
     # This is a trick to avoid duplicating dependencies between both setup.py and requirements.txt.
     # requirements.txt must be included in MANIFEST.in for this to work.
     install_requires=project_dir.joinpath("requirements.txt").read_text().split("\n"),

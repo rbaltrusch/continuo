@@ -4,7 +4,7 @@
 import numpy
 import pytest
 
-from music_generation import generator, scale, duration, music_algorithm, layer
+from continuo import generator, scale, duration, music_algorithm, layer
 
 
 def test_generator(monkeypatch):

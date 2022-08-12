@@ -29,9 +29,9 @@ import numpy
 
 from musical.audio import source
 
-from music_generation.enums import Notes
-from music_generation.scale import Scale
-from music_generation.layer import Layer
+from continuo.enums import Notes
+from continuo.scale import Scale
+from continuo.layer import Layer
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=missing-function-docstring

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """Music algorithm module tests"""
 
-import music_generation
+import continuo
 import pytest
 
-from music_generation import music_algorithm, layer
+from continuo import music_algorithm, layer
 
 
 def test_get_consonance():

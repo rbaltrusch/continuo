@@ -9,3 +9,5 @@ tests/htmlcov/
 **/*.json
 **/*.wav
 !example_music/**/*.wav
+dist/
+venv/

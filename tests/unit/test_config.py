@@ -6,7 +6,7 @@ import os
 
 import pytest
 
-from music_generation import config, music_algorithm
+from continuo import config, music_algorithm
 
 
 def teardown():

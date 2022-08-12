@@ -2,7 +2,7 @@
 """Effects module tests"""
 
 import numpy
-from music_generation import effects
+from continuo import effects
 
 def test_effects():
     effects.apply_effects(numpy.ndarray((1, 1)))

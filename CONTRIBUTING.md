@@ -16,7 +16,7 @@ If what you were thinking of is not listed here, this is not a problem! Simply s
 To setup your local development environment, open a terminal and run the following:
 
 ```
-git clone https://github.com/rbaltrusch/music_generation
+git clone https://github.com/rbaltrusch/continuo
 python -m pip install -r requirements.txt
 ```
 

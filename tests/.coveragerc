@@ -2,6 +2,6 @@
 
 [run]
 omit =
-    ../music_generation/__main__.py,
+    ../continuo/__main__.py,
     ../setup.py,
     unit/*.py,

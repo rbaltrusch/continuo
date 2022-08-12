@@ -4,7 +4,7 @@
 from typing import List
 from dataclasses import dataclass
 
-from music_generation import scale, duration, music_algorithm, timeline, layer
+from continuo import scale, duration, music_algorithm, timeline, layer
 
 
 @dataclass

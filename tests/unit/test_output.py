@@ -5,7 +5,7 @@ import os
 
 import numpy
 
-from music_generation import output, layer
+from continuo import output, layer
 
 
 def teardown():

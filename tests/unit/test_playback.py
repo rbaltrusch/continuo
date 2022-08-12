@@ -3,7 +3,7 @@
 
 import numpy
 import pytest
-from music_generation import playback
+from continuo import playback
 
 @pytest.mark.skip_workflow
 def test_playback():

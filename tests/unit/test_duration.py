@@ -5,7 +5,7 @@ import math
 
 import pytest
 
-from music_generation import duration
+from continuo import duration
 
 
 @pytest.mark.parametrize(

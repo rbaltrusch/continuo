@@ -1,5 +1,5 @@
-[![Pylint](https://github.com/rbaltrusch/music_generation/actions/workflows/pylint.yml/badge.svg)](https://github.com/rbaltrusch/music_generation/actions/workflows/pylint.yml)
-[![Unit tests](https://github.com/rbaltrusch/music_generation/actions/workflows/pytest-unit-tests.yml/badge.svg)](https://github.com/rbaltrusch/music_generation/actions/workflows/pytest-unit-tests.yml)
+[![Pylint](https://github.com/rbaltrusch/continuo/actions/workflows/pylint.yml/badge.svg)](https://github.com/rbaltrusch/continuo/actions/workflows/pylint.yml)
+[![Unit tests](https://github.com/rbaltrusch/continuo/actions/workflows/pytest-unit-tests.yml/badge.svg)](https://github.com/rbaltrusch/continuo/actions/workflows/pytest-unit-tests.yml)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 # Music Generation
@@ -10,16 +10,16 @@ This tool procedurally generates music based on codified Western classical music
 
 To get a copy of this repository, simply open up git bash in an empty folder and use the command:
 
-    $ git clone https://github.com/rbaltrusch/music_generation
+    $ git clone https://github.com/rbaltrusch/continuo
 
-To install the music_generation module and all python dependencies, run the following in your command line:
+To install the continuo module and all python dependencies, run the following in your command line:
 
     python -m pip install -e .
     python -m pip install -r requirements.txt
 
 To run the music generator, run the package from the project root folder:
 
-    python -m music_generation
+    python -m continuo
 
 ## Example music
 
@@ -92,7 +92,7 @@ optional arguments:
 The help message can be brought up by running:
 
 ```
-python -m music_generation -h
+python -m continuo -h
 ```
 
 ### Configuration file
@@ -102,13 +102,13 @@ Advanced settings, such as intervals, harmonies and consonance mappings can not 
 Generate a template configuration file by running:
 
 ```
-python -m music_generation --generate-config <filename>
+python -m continuo --generate-config <filename>
 ```
 
 To run the music generator with a configuration file, run:
 
 ```
-python -m music_generation --config-file <filename>
+python -m continuo --config-file <filename>
 ```
 
 The configuration file currently supports 4 main advanced settings:
@@ -153,7 +153,7 @@ Written in Python 3.8.3.
 
 ## License
 
-This repository is open-source software available under the [AGPL-3.0 License](https://github.com/rbaltrusch/music_generation/blob/master/LICENSE).
+This repository is open-source software available under the [AGPL-3.0 License](https://github.com/rbaltrusch/continuo/blob/master/LICENSE).
 
 ## Contact
 

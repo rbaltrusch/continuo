@@ -3,7 +3,7 @@
 
 import json
 from typing import Any, List, Dict
-from music_generation.music_algorithm import MusicGenerator
+from continuo.music_algorithm import MusicGenerator
 
 
 class ConfigurationError(Exception):

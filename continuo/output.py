@@ -10,7 +10,7 @@ from typing import List
 import numpy
 from musical.audio.save import save_wave
 
-from music_generation.layer import Layer
+from continuo.layer import Layer
 
 
 def save_to_wav_file(data: numpy.ndarray, filepath: str) -> None:

@@ -32,11 +32,11 @@ repos:
 #     rev: v2.6.0
 #     hooks:
 #     -   id: reorder-python-imports
-#         args: [--application-directories=music_generation, --py36-plus]
+#         args: [--application-directories=continuo, --py36-plus]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.910-1
     hooks:
     -   id: mypy
-        files: ^music_generation/
+        files: ^continuo/
         args: [--ignore-missing-imports]

@@ -4,7 +4,7 @@
 from itertools import zip_longest
 import pytest
 
-from music_generation import layer
+from continuo import layer
 
 
 @pytest.mark.parametrize(

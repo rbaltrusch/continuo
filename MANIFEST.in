@@ -1,5 +1,5 @@
 include README.md
 include LICENSE
 include requirements.txt
-include music_generation/py.typed
+include continuo/py.typed
 recursive-exclude tests *

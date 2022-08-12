@@ -4,7 +4,7 @@
 import argparse
 import pytest
 
-from music_generation import cli
+from continuo import cli
 
 
 def test_default_parser():

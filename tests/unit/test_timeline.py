@@ -2,7 +2,7 @@
 """Timeline module tests"""
 
 import numpy
-from music_generation import layer, timeline, scale
+from continuo import layer, timeline, scale
 
 
 def test_render_hit():

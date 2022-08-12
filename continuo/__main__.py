@@ -11,7 +11,7 @@ os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "True"  # hide pygame hello
 import functools
 import logging
 
-from music_generation import (
+from continuo import (
     playback,
     layer,
     generator,
@@ -21,7 +21,7 @@ from music_generation import (
     config,
     output,
 )
-from music_generation.scale import Scale
+from continuo.scale import Scale
 
 
 def read_config_file(config_file: str):
@@ -34,7 +34,7 @@ def read_config_file(config_file: str):
     )
 
 
-def setup_music_generation(args) -> None:
+def setup_continuo(args) -> None:
     """Sets up music generation constants and random seed"""
     music_algorithm.NUMBER_OF_MOTIFS = args.motifs
     music_algorithm.NUMBER_OF_VARIATIONS = args.variations
@@ -91,7 +91,7 @@ def save_to_file(args, data, layers):
 
 def generate_music(args) -> None:
     """Generates music"""
-    setup_music_generation(args)
+    setup_continuo(args)
     layers = construct_layers(args)
     generator_ = construct_generator(args)
     data = generator_.generate_music(layers)

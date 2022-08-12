@@ -4,7 +4,7 @@
 import pytest
 import musical.theory
 
-from music_generation import scale
+from continuo import scale
 
 
 @pytest.mark.parametrize("base,octave,tonality", [("A", 3, "major"), ("B", 2, "minor")])
