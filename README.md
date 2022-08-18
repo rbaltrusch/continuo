@@ -8,22 +8,14 @@ This tool procedurally generates music based on codified Western classical music
 
 ## Getting started
 
-To get a copy of this repository, simply open up git bash in an empty folder and use the command:
+To run the music generator, install it using pip, then run the package from the project root folder:
 
-    $ git clone https://github.com/rbaltrusch/continuo
-
-To install the continuo module and all python dependencies, run the following in your command line:
-
-    python -m pip install -e .
-    python -m pip install -r requirements.txt
-
-To run the music generator, run the package from the project root folder:
-
+    python -m pip install continuo
     python -m continuo
 
 ## Example music
 
-Example music can be found [here](example_music).
+Example music can be found [here](https://github.com/rbaltrusch/continuo/blob/master/example_music).
 
 ## Parameterization
 
@@ -145,7 +137,7 @@ An example configuration file could look like this:
 
 ## Contributions
 
-All contributions are welcome! Please read the [contribution guidelines](CONTRIBUTING.md).
+All contributions are welcome! Please read the [contribution guidelines](https://github.com/rbaltrusch/continuo/blob/master/CONTRIBUTING.md).
 
 ## Python
 

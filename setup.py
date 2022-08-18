@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""Setup file for pip install"""
 from pathlib import Path
 
 import setuptools
@@ -8,7 +8,7 @@ project_dir = Path(__file__).parent
 
 setuptools.setup(
     name="continuo",
-    version="0.2.0",
+    version="0.2.2",
     description="Procedural music generator",
     long_description=project_dir.joinpath("README.md").read_text(encoding="utf-8"),
     long_description_content_type="text/markdown",
@@ -22,7 +22,9 @@ setuptools.setup(
     package_data={"continuo": ["py.typed"]}, # for mypy
     # This is a trick to avoid duplicating dependencies between both setup.py and requirements.txt.
     # requirements.txt must be included in MANIFEST.in for this to work.
-    install_requires=project_dir.joinpath("requirements.txt").read_text().split("\n"),
+    install_requires=project_dir.joinpath("requirements.txt")
+    .read_text(encoding="utf-8")
+    .split("\n"),
     zip_safe=False,
     license="AGPLv3",
     classifiers=[
