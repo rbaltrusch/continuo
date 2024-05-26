@@ -17,6 +17,12 @@ To run the music generator, install it using pip, then run the package from the 
 
 Example music can be found [here](https://github.com/rbaltrusch/continuo/blob/master/example_music).
 
+## ⚠️ State of the repository ⚠️
+
+This repository is unlikely to receive new features in the future, although maintenance and small fixes will still be done.
+
+This means that some features that are missing now will stay missing (but feel free to submit a pull request to add them!), and non-optimal aspects of the codebase or the application are unlikely to get fixed.
+
 ## Parameterization
 
 Custom parameterization is possible over the command line interface or an external configuration file, but currently not consolidated into one config file.
